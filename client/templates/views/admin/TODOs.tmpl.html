@@ -1,0 +1,22 @@
+<template name="TODOs">
+	{{> tabular table=TabDT.TODOs class="table table-striped table-condensed"}}
+	<a href="/admin/TODOs/add" class="btn btn-primary">Ajouter</a>
+</template>
+
+<template name="editTODO">
+	<a href="/admin/TODOs/{{_id}}" class="btn btn-xs btn-default">Modifier</a>
+</template>
+
+<template name="TODOEdition">
+{{> TODORetour}}
+{{> quickForm collection="TODOs" doc=this id="updateTODOForm" type="update"}}
+</template>
+
+<template name="TODOAddition">
+{{> TODORetour}}
+{{> quickForm collection="TODOs" id="insertTODOForm" type="insert"}}
+</template>
+
+<template name="TODORetour">
+	<a href="/admin/TODOs" class="btn btn-primary">Retour</a>
+</template>

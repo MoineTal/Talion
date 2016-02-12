@@ -1,0 +1,11 @@
+<template name="accountTeams">
+	{{#if currentUser}}
+	<form class="new-team">
+		<input type="text" name="name" placeholder="name" />
+		<input type="text" name="desc" placeholder="description" />
+		<button type="submit">OK</button>
+	</form>
+	{{/if}}
+	<ul>{{#each accountTeams}} {{> accountTeam}} {{/each}}
+	</ul>
+</template>

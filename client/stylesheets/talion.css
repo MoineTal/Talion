@@ -1,0 +1,25 @@
+/** tailles */
+.icon-xs  {
+	width: 16px;
+	height: 16px;
+}
+.icon-sm  {
+	width: 32px;
+	height: 32px;
+}
+.icon-md  {
+	width: 64px;
+	height: 64px;
+	}
+.icon-lg  {
+	width: 128px;
+	height: 128px;
+}
+
+/** couleurs */
+.icon-yellow  {
+	fill: yellow;
+}
+.icon-red  {
+	fill: red;
+}

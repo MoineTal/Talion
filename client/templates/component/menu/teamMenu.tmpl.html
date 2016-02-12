@@ -1,0 +1,22 @@
+<template name="teamMenu">
+{{#each teams}}
+<li class="dropdown">
+    <a class="dropdown-toggle"
+        data-toggle="dropdown" href="#" id="themes">
+        <span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;{{name}}&nbsp;&nbsp;<span class="badge"><img src="/img/coins.png" />{{glory}}</span>&nbsp;<span class="badge">{{> Gold size="icon-xs" color="icon-yellow"}}{{gold}}600</span><span class="caret"></span>
+    </a>
+    <ul id="menu{{_id}}" class="dropdown-menu" aria-labelledby="themes">
+        <li><a href="/teams/{{_id}}">Tableau de bord</a></li>
+
+        {{#if allowAddingGladiator _id }}
+<!--         <li><a href="#" class="addTeamGladiator" rel="{{_id}}"><i>Recruter un gladiateur&nbsp;<span class="badge"><img src="/img/coins.png" />900</span></i></a></li> -->
+         <li><a href="#" class="addTeamGladiator" rel="{{_id}}"><i>Recruter un gladiateur&nbsp;<span class="badge">{{> Gold size="icon-xs" color="icon-yellow"}}900</span></i></a></li>
+		{{/if}}
+
+        <li class="divider"></li>
+
+        {{> gladiatorMenu}}
+    </ul>
+</li>
+{{/each}}
+</template>

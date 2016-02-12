@@ -1,0 +1,121 @@
+<template name="addTeamGladiator">
+<!-- ADD Gladiator-->
+    <div id="addGladiator-modal" class="modal fade in">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Recruter un Gladiateur</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal addTeamGladiator">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="inputGladiatorName"
+                                       class="col-lg-2 control-label">Nom</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputGladiatorName" name="name" placeholder="Un nom qui restera (peut-&ecirc;tre) dans la l&eacute;gende" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputGladiatorDescription"
+                                       class="col-lg-2 control-label">Description</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputGladiatorDescription" name="desc" placeholder="Qui est-il, d'ou vient-t-il ? Que tue-t-il ?" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Attributs</label>
+                                <div class="col-lg-10">
+                                    <span>Valeur comprise entre <strong class="text-success">{{getMinAttrVal}}</strong> et <strong class="text-success">{{getMaxAttrVal}}</strong>. La somme des attributs doit &ecirc;tre &eacute;gale &agrave; <strong class="text-success">{{getSumAttrVal}}</strong></span>
+                                    <table class="table table-striped table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th><label for="inputGladiatorRap" class="col-lg-2 control-label">Rapidit&eacute;</label></th>
+                                                <th><label for="inputGladiatorPer" class="col-lg-2 control-label">Perception</label></th>
+                                                <th><label for="inputGladiatorDex" class="col-lg-2 control-label">Dext&eacute;rit&eacute;</label></th>
+                                                <th><label for="inputGladiatorFor" class="col-lg-2 control-label">Force</label></th>
+                                                <th><label for="inputGladiatorRes" class="col-lg-2 control-label">R&eacute;sistance</label></th>
+                                                <th><label for="inputGladiatorMen" class="col-lg-2 control-label">Mental</label></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control" id="inputGladiatorRap" name="rap" placeholder="Rapidit&eacute;" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="inputGladiatorPer" name="per" placeholder="Perception" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="inputGladiatorDex" name="dex" placeholder="Dext&eacute;rit&eacute;" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="inputGladiatorFor" name="for" placeholder="Force" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="inputGladiatorRes" name="res" placeholder="R&eacute;sistance" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="inputGladiatorMen" name="men" placeholder="Mental" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="alert alert-dismissable alert-success">
+                                <h4>S&eacute;lectionnez vos attributs avec soin !</h4>
+                                <p>Ces attributs serviront de base pour calculer la valeurs des caract&eacute;ristiques de combat (vitesse, force, vie, etc.); <a target="_blank" href="http://www.google.fr" class="alert-link">voir l'aide pour plus de d&eacute;tails</a>.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputGladiatorPreferedCarac"
+                                       class="col-lg-2 control-label">Caract&eacute;t&eacute;ristique pr&eacute;f&eacute;r&eacute;e</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="inputGladiatorPreferedCarac" name="pref">
+                                    	{{#each getAttributes}}
+                                    	<!-- To override HTML-escape in Handlebars, use the triple-stash: -->
+                                    	<option value="{{_id}}">{{{name}}}</option> 
+                                    	{{/each}}
+                                    </select>
+                                    <div id="gladiatorPrefCarDesc" class="well"></div>
+                                    <!-- {{invokePrefCarAfterLoad}} -->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectGladiatorArea"
+                                       class="col-lg-2 control-label">Classe (d&eacute;termine les comp&eacute;tences de combat disponibles)</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="selectGladiatorArea" name="area">
+                                    	{{#each getAreas}}
+                                    	<option value="{{_id}}">{{{name}}}</option> 
+                                    	{{/each}}
+                                    </select>
+                                    <div id="gladiatorAreaDesc" class="well"></div>
+                                    <!-- {{invokeAreaAfterLoad}} -->
+                                </div>
+                            </div>
+                            <div class="alert alert-dismissable alert-success">
+                                <p>L'attribut pr&eacute;f&eacute;r&eacute; d&eacute;finit le domaine dans lequel le gladiateur exc&egrave;le, et pour lequel le co&ucirc;t d'am&eacute;lioration en exp&eacute;rience (xp) est divis&eacute; par deux ! <a target="_blank" href="http://localhost:3000/templatesExamples" class="alert-link">voir l'aide pour plus de d&eacute;tails</a>.</p>
+                            </div>
+                            <div class="form-group addMsg" style="display:none;"><p class="text-danger"></p></div>
+                            <div class="form-group">
+                                <button id="btnAddGladiatorCancel" data-dismiss="modal"
+                                        class="btn btn-default">
+                                    Annuler
+                                </button>
+                                <button id="btnAddGladiator" class="btn btn-primary" type="submit">Valider <span class="badge"><img src="/img/coins.png" /><span id="costAddGladiator"></span></span></button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- /ADD Gladiator-->
+
+</template>

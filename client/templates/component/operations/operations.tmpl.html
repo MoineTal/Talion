@@ -1,0 +1,48 @@
+<!-- une operation qui affiche "op1=". op1 doit être une operation whatWho -->
+<template name="operationsEgalite">
+ 	{{#each val}}
+	<code>
+		{{>ope getOp1 ..}}
+		<b>{{getOpe 'EGA'}}</b>
+		{{>operation getVal .. }}
+	</code>&nbsp;
+	{{/each}}
+</template>
+
+<!-- une operation simple (qui peut contenir des sous-operations) -->
+<template name="operationsSimples">
+	{{#each val}}
+	<code>
+		{{>operation getVal ..}}
+	</code>&nbsp;
+	{{/each}}
+</template>
+
+<template name="whatWho">
+	<b><span class="text-info">{{val.what}}</span></b>
+	{{#if showCible}}
+	<span class="text-danger">[{{val.who}}]</span>
+	{{/if}}
+</template>
+
+<template name="ope">
+		{{#if val.what}}
+			{{>whatWho}}
+		{{else}}
+			<b>(</b>{{>operation}}<b>)</b>
+		{{/if}}
+</template>
+
+<template name="operation">
+	{{#if val.op1}}
+		{{>ope getOp1}}
+	{{else}}
+		{{val.op1val}}
+	{{/if}}
+	<b>{{getOpe val.op}}</b>
+	{{#if val.op2}}
+		{{>ope getOp2}}
+	{{else}}
+		{{val.op2val}}
+	{{/if}}
+</template>
