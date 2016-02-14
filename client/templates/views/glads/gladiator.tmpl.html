@@ -1,0 +1,61 @@
+<template name="gladiator">
+    <div class="container">
+        <div class="row">
+            {{#with glad}}
+            <div class="col-xs-12 col-md-12 col-lg-12 well">
+                {{>gladiatorDesc}}
+                {{>gladiatorMiscData}}
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                    <ul class="nav nav-tabs" style="margin-bottom: 5px;margin-top:5px;">
+                        <li class="active"><a href="#tabGladiatorGraph2" data-toggle="tab">Base</a></li>
+                        <li><a href="#tabGladiatorGraphEquip2" data-toggle="tab">Graphique</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="tabGladiatorGraph2">
+                            {{>gladiatorAttributes}}
+                            {{>gladiatorTargeting}}
+                            {{>gladiatorCaracteristics}}
+                        </div>
+                        <div class="tab-pane fade in" id="tabGladiatorGraphEquip2">
+                            {{>gladiatorRadars}}
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                {{>gladiatorFights}}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="nav nav-tabs" style="margin-bottom: 5px;">
+                    <li class="active"><a href="#tabGladiatorNews" data-toggle="tab">News</a></li>
+                    <li><a href="#tabGladiatorTraining" data-toggle="tab">Entrainement</a></li>
+                    <li><a href="#tabGladiatorEquipments" data-toggle="tab">Equipements</a></li>
+                    <li><a href="#tabGladiatorRunes" data-toggle="tab">Runes</a></li>
+                    <li><a href="#tabGladiatorTactics" data-toggle="tab">Tactiques</a></li>
+                    <li><a href="#tabGladiatorStats" data-toggle="tab">Statistiques</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="tabGladiatorNews">
+                        {{>gladiatorNews}}
+                    </div>
+                    <div class="tab-pane fade" id="tabGladiatorTraining">
+                        {{>gladiatorTraining}}
+                    </div>
+                    <div class="tab-pane fade" id="tabGladiatorEquipments">
+                        {{>gladiatorEquipments}}
+                    </div>
+                    <div class="tab-pane fade" id="tabGladiatorRunes">
+                        {{>gladiatorRunes}}                    
+                    </div>
+                    <div class="tab-pane fade" id="tabGladiatorTactics">
+                        {{>gladiatorTactics}}
+                    </div>
+                    <div class="tab-pane fade" id="tabGladiatorStats">
+                        {{>gladiatorStats}}
+                    </div>
+                </div>
+            </div>
+            {{/with }}
+        </div>
+    </div>
+</template>

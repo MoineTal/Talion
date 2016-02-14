@@ -1,0 +1,62 @@
+<template name="menu">
+    <div class="navbar navbar-default navbar-static-top">
+        <!-- navbar-fixed-top"> -->
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">TAL<span>ION</span></a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse"
+                        data-target="#navbar-main">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+        		<!-- {{#if currentUser}} -->
+                <ul id="menuAccount" class="nav navbar-nav">
+                    <!-- TODO seulement si une equipe est selectionnee-->
+	         		<!--{{#if isAdmin }} -->
+                        {{> adminMenu}}
+                        {{> dataMenu}}
+					<!--{{/if}} -->
+                    <li>
+                        <a href="/accounts/{{userId}}">
+                            <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Mon compte
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/messages/{{userId}}">
+                            <span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;Messages <span class="badge" id="newMessageNb">0</span>
+                        </a>
+                    </li>
+                    {{> teamMenu}}
+                    {{#if allowAddingTeam }}
+						<li><a href="#addTeam-modal" data-toggle="modal"><i>Cr&eacute;er une &eacute;quipe</i></a></li>					
+                    {{/if}}
+                </ul>
+				<!-- {{/if}} -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown" href="#" id="themes">
+                            <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Le jeu <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="themes">
+                            <li><a href="/#ranking">Classements</a></li>
+                            <li><a href="/#graveyard">Cimeti&egrave;re</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/forum">Forum</a></li>
+                            <li><a href="/#rules">R&egrave;gles du jeu</a></li>
+                            <li><a href="/#credits">Cr&eacute;dits</a></li>
+                        </ul>
+                    </li>
+                    <li>
+						{{> loginButtons}}
+                    
+                        <!--  <a href="/logout"> -->
+                            <!--  target="_blank" --><!--<span class="glyphicon glyphicon-off"></span> -->
+                        <!--  </a> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>

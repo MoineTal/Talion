@@ -1,0 +1,23 @@
+<template name="News">
+	{{> tabular table=TabDT.News class="table table-striped table-condensed"}}
+  	<a href="/admin/News/add" class="btn btn-primary">Ajouter</a>
+</template>
+
+<template name="editNew">
+	<a href="/admin/News/{{_id}}" class="btn btn-xs btn-default">Modifier</a>
+</template>
+
+<template name="NewEdition">
+{{> NewRetour}}
+{{> quickForm collection="News" doc=this id="updateNewForm" type="update"}}
+</template>
+
+<template name="NewAddition">
+{{> NewRetour}}
+{{> quickForm collection="News" id="insertNewForm" type="insert"}}
+</template>
+
+<template name="NewRetour">
+	<a href="/admin/News" class="btn btn-primary">Retour</a>
+</template>
+

@@ -1,0 +1,22 @@
+<template name="Stadiums">
+	{{> tabular table=TabDT.Stadiums class="table table-striped table-condensed"}}
+	<a href="/admin/Stadiums/add" class="btn btn-primary">Ajouter</a>
+</template>
+
+<template name="editStadium">
+	<a href="/admin/Stadiums/{{_id}}" class="btn btn-xs btn-default">Modifier</a>
+</template>
+
+<template name="StadiumEdition">
+{{> StadiumRetour}}
+{{> quickForm collection="Stadiums" doc=this id="updateStadiumForm" type="update"}}
+</template>
+
+<template name="StadiumAddition">
+{{> StadiumRetour}}
+{{> quickForm collection="Stadiums" id="insertStadiumForm" type="insert"}}
+</template>
+
+<template name="StadiumRetour">
+	<a href="/admin/Stadiums" class="btn btn-primary">Retour</a>
+</template>
