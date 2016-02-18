@@ -7,7 +7,7 @@ var getPerk = function(idPerk) {
 	return dalPerks.get(idPerk);
 }
 
-var calculerPrerequis = function(attributes, effects, attrPrerequis) {
+var calculerPrerequis = function(attributes, fightMisc, effects, attrPrerequis) {
 	var prerequis  =[];
 	if(!attrPrerequis) {
 		attrPrerequis = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
@@ -20,6 +20,11 @@ var calculerPrerequis = function(attributes, effects, attrPrerequis) {
 		bllUtil.majAttributes(attrPrerequis, 'FOR', attributes.for*config.perk.PREREQUIS_BASE);		
 		bllUtil.majAttributes(attrPrerequis, 'RES', attributes.res*config.perk.PREREQUIS_BASE);	
 		bllUtil.majAttributes(attrPrerequis, 'MEN', attributes.men*config.perk.PREREQUIS_BASE);				
+
+		bllUtil.majAttributes(attrPrerequis, 'FOC', fightMisc.foc*config.perk.PREREQUIS_BASE);
+		bllUtil.majAttributes(attrPrerequis, 'DAN', fightMisc.dan*config.perk.PREREQUIS_BASE);
+		bllUtil.majAttributes(attrPrerequis, 'SUR', fightMisc.sur*config.perk.PREREQUIS_BASE);
+		bllUtil.majAttributes(attrPrerequis, 'LET', fightMisc.let*config.perk.PREREQUIS_BASE);
 
 		console.log('rap=' + attrPrerequis.rap+ 
 				';per=' + attrPrerequis.per+ 
@@ -39,9 +44,9 @@ var calculerPrerequis = function(attributes, effects, attrPrerequis) {
 	return (prerequis.length > 0) ? prerequis : null;
 }
 
-var addPerk = function(userId, name, desc, idClasse, attributes, effects, prerequis) {
-	var prerequis = calculerPrerequis(attributes, effects, prerequis);
-	return dalPerks.add(userId, name, desc, idClasse, prerequis, attributes, effects, prerequis);
+var addPerk = function(userId, name, desc, idClasse, attributes, fightMisc, effects, prerequis) {
+	var prerequis = calculerPrerequis(attributes, fightMisc, effects, prerequis);
+	return dalPerks.add(userId, name, desc, idClasse, prerequis, attributes, fightMisc, effects, prerequis);
 }
 
 var delPerk = function(idPerk) {

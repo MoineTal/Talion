@@ -1,18 +1,32 @@
 /** met � jour les attributs avec l'attribut trouv�e et un calcul � partir de la valeur de la caracteristique li�e */
-var majAttributes = function (attributes, attribute, valAttribute) {
+var majAttributes = function (attributes, type, val) {
 
-	if(attribute == 'RAP') {
-		attributes.rap += valAttribute;
-	} else if (attribute == 'PER') {
-		attributes.per += valAttribute;
-	} else if (attribute == 'DEX') {
-		attributes.dex += valAttribute;
-	} else if (attribute == 'FOR') {
-		attributes.for += valAttribute;
-	} else if (attribute == 'RES') {
-		attributes.res += valAttribute;
-	} else if (attribute == 'MEN') {
-		attributes.men += valAttribute;
+	if(val > 0) {
+		if(type == 'RAP') {
+			attributes.rap += val;
+		} else if (type == 'PER') {
+			attributes.per += val;
+		} else if (type == 'DEX') {
+			attributes.dex += val;
+		} else if (type == 'FOR') {
+			attributes.for += val;
+		} else if (type == 'RES') {
+			attributes.res += val;
+		} else if (type == 'MEN') {
+			attributes.men += val;
+		} else if (type == 'FOC') {
+			attributes.per += val;
+			attributes.dex += val;
+		} else if (type == 'DAN') {
+			attributes.res += val;
+			attributes.for += val;
+		} else if (type == 'SUR') {
+			attributes.men += val;
+			attributes.res += val;
+		} else if (type == 'LET') {
+			attributes.rap += val;
+			attributes.for += val;
+		}		
 	}
 }
 //ajoute un prérequis
@@ -41,7 +55,7 @@ var addEffects = function(array, op1, val) {
 			op1val : 0,
 			op : op,
 			op2 : null,
-			op2val : val			
+			op2val : (val >= 0) ? val : -val			
 		};
 		array.push(effect);
 		

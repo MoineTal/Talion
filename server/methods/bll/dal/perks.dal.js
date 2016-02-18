@@ -8,7 +8,7 @@ var getPerk = function(idPerk) {
 	return Perks.findOne({ _id : idPerk });
 }
 
-var addPerk = function(userId, name, desc, idClasse, prerequis, attributes, effects) {
+var addPerk = function(userId, name, desc, idClasse, prerequis, attributes, fightMisc, effects) {
 	//check(userId, Meteor.users);
 	check(name, String);
 	check(desc, String);
@@ -17,6 +17,7 @@ var addPerk = function(userId, name, desc, idClasse, prerequis, attributes, effe
 		desc : desc,
 		prerequis : prerequis,
 		attributes : attributes,
+		fightMisc: fightMisc,
 		effects : effects,
 		createdAt : new Date(),
 		owner : userId
