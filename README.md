@@ -17,7 +17,7 @@ Basé sur meteor.js
 
 ###### misc
 * meteor add meteorhacks:fast-render
-* meteor add iron-router
+* meteor add iron:router
 
 ###### utilitaires
 * meteor add msavin:mongol
