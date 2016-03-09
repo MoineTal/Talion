@@ -1,34 +1,9 @@
-var creerPerksAnge = function(id) {
-	console.log('!! Ange !!');
-
-	var effects = [];
-	var prerequis = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-	// TODO calculer prerequis correctement !
-	bllUtil.addEffects(effects, {what : 'FOC', who : 'ME'}, config.perk.BASE_FOC_VAL*2/*prerequis*/);
-	bllUtil.majAttributes(prerequis, 'PER', config.perk.BASE_FOC_VAL*2);
-	console.log('effects=');
-	console.log(effects);
-	console.log('prerequis=');
-	console.log(prerequis);
-	var attributes = { 'rap': 0, 'per': 0, 'dex': 1, 'for': 1, 'res': 0, 'men': 0 };
-	bllPerks.add(null, "Précis", "Une précision...divine !", id, attributes, effects, prerequis);
-	
-	effects = [];
-	prerequis = [];
-	bllUtil.addEffects(effects, {what : 'FOC', who : 'ME'}, config.perk.BASE_FOC_VAL*2/*prerequis*/);
-	bllUtil.addEffects(effects, {what : 'DAN', who : 'ME'}, -config.perk.BASE_DAN_VAL*2/*prerequis*/);
-	bllUtil.addEffects(effects, {what : 'KLL', who : 'ME'}, -config.perk.BASE_KILL_VAL*2/*prerequis*/);
-	bllUtil.majAttributes(prerequis, 'PER', config.perk.BASE_FOC_VAL*2);
-	bllUtil.majAttributes(prerequis, 'RES', config.perk.BASE_DAN_VAL*2);
-	bllUtil.majAttributes(prerequis, 'FOR', config.perk.BASE_KILL_VAL*2);
-	console.log('effects=');
-	console.log(effects);
-	console.log('prerequis=');
-	console.log(prerequis);
-	var attributes = { 'rap': 0, 'per': 2, 'dex': 0, 'for': 2, 'res': 1, 'men': 0 };
-	bllPerks.add(null, "Bienveillant", "Il aime son prochain", id, attributes, effects, prerequis);
+var creerPerk = function(user, name, desc, idClasse, rap, per, dex, force, res, men, foc, dan, sur, letal, effects, prerequis) {
+	prerequis = prerequis || { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
+	var attributes = { 'rap': rap, 'per': per, 'dex': dex, 'for': force, 'res': res, 'men': men };
+	var fightMisc = { 'foc': foc, 'dan': dan, 'sur': sur, 'let': letal };	
+	bllPerks.add(user, name, desc, idClasse, attributes, fightMisc, effects, prerequis);
 }
-
 
 var creerDonneesBase = function() {
 	
@@ -36,145 +11,37 @@ var creerDonneesBase = function() {
 
 	if(bllPerks.getAll().count() === 0 && bllPerks.getAll().count() === 0) {
 		var effects = null;
-		var attributes = { 'rap': 1, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Agile", "Un peu plus rapide que la moyenne...", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 1, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Attentif", "Un peu plus attentif que la moyenne...", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 1, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Souple", "Un peu plus souple que la moyenne...", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 1, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Trapu", "Un peu plus fort que la moyenne...", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 1, 'men': 0 };
-		bllPerks.add(null, "Résistant", "Un peu plus résistant que la moyenne...", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 1 };
-		bllPerks.add(null, "Volontaire", "Un peu plus volontaire que la moyenne...", null, attributes, effects);
-		effects = [{
-			op1 : {what : 'FOC', who : 'ME'},
-			op1val : 0,
-			op : 'ADD',
-			op2 : null,
-			op2val : config.perk.BASE_FOC_VAL			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Concentré", "Un peu plus concentré que la moyenne...", null, attributes, effects);		
-		effects = [{
-				op1 : {what : 'DAN', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_DAN_VAL			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Inquiétant", "Un quelque chose de dérangeant...", null, attributes, effects);
-		effects = [{
-				op1 : {what : 'KLL', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_KILL_VAL			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Brutal", "Il fait mal, et ça lui plait.", null, attributes, effects);
-		
-		effects = null;
-		attributes = { 'rap': 2, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Nerveux", "Agité de tics, et très rapide.", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 2, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Observateur", "Il identifie les faiblesses de ses adversaires.", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 2, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Habile", "Sait manier tout type d'arme.", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 2, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Fort", "Des muscles saillants", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 2, 'men': 0 };
-		bllPerks.add(null, "Inébranlable", "Le faire chuter tient de la performance !", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 2 };
-		bllPerks.add(null, "Déterminé", "Il ne s'en laisse pas compter.", null, attributes, effects);
-		effects = [{
-				op1 : {what : 'FOC', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_FOC_VAL*2			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Focalisé", "Se choisit un objectif, et s'y tient !", null, attributes, effects);		
-		effects = [{
-				op1 : {what : 'DAN', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_DAN_VAL*2			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Menaçant", "Ses adversaires sont obligés de l'avoir à l'oeil !", null, attributes, effects);
-		effects = [{
-				op1 : {what : 'KLL', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_KILL_VAL*2			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Cruel", "Aime faire souffrir", null, attributes, effects);
-		
-		effects = null;
-		attributes = { 'rap': 3, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Véloce", "Difficile de le suivre.", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 3, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Vigilant", "Rien ne lui échappe !", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 3, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Infaillible", "Ne rate jamais sa cible.", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 3, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Puissant", "Une force qui impose le respect.", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 3, 'men': 0 };
-		bllPerks.add(null, "Invincible", "Les coups semblent ne rien lui faire...", null, attributes, effects);
-		effects = null;
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 3 };
-		bllPerks.add(null, "Obstiné", "Une vraie force de caractère !", null, attributes, effects);
-		effects = [{
-				op1 : {what : 'FOC', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_FOC_VAL*3		
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Maniaque", "Semble ne rien savoir faire d'autre que son objectif du moment.", null, attributes, effects);		
-		effects = [{
-				op1 : {what : 'DAN', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_DAN_VAL*3			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Terrifiant", "Sa simple présence encourage les défections.", null, attributes, effects);
-		effects = [{
-				op1 : {what : 'KLL', who : 'ME'},
-				op1val : 0,
-				op : 'ADD',
-				op2 : null,
-				op2val : config.perk.BASE_KILL_VAL*3			
-		}];
-		attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		bllPerks.add(null, "Sanguinaire", "Adepte de la décoration extérieure", null, attributes, effects);
-
-		//var attributes = { 'rap': 0, 'per': 0, 'dex': 0, 'for': 0, 'res': 0, 'men': 0 };
-		//bllPerk.add("agile", "", null, attributes, effects);
+		var prerequis = null;
+		creerPerk(null, "Agile", "Un peu plus rapide que la moyenne...", null, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Attentif", "Un peu plus attentif que la moyenne...", null, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Souple", "Un peu plus souple que la moyenne...", null, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Trapu", "Un peu plus fort que la moyenne...", null, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Résistant", "Un peu plus résistant que la moyenne...", null, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Volontaire", "Un peu plus volontaire que la moyenne...", null, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Concentré", "Un peu plus concentré que la moyenne...", null, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Inquiétant", "Un quelque chose de dérangeant...", null, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, effects, prerequis);
+		creerPerk(null, "Endurant", "Sait prendre les coups.", null, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, effects, prerequis);
+		creerPerk(null, "Brutal", "Il fait mal, et ça lui plait.", null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, effects, prerequis);
+		creerPerk(null, "Nerveux", "Agité de tics, et très rapide.", null, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Observateur", "Il identifie les faiblesses de ses adversaires.", null, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Habile", "Sait manier tout type d'arme.", null, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Fort", "Des muscles saillants", null, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Inébranlable", "Le faire chuter tient de la performance !", null, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Déterminé", "Il ne s'en laisse pas compter.", null, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Focalisé", "Se choisit un objectif, et s'y tient !", null, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Menaçant", "Ses adversaires sont obligés de l'avoir à l'oeil !", null, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, effects, prerequis);
+		creerPerk(null, "Survivant", "une capacité à survivre étonnante !", null, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, effects, prerequis);
+		creerPerk(null, "Cruel", "Aime faire souffrir", null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, effects, prerequis);
+		creerPerk(null, "Véloce", "Difficile de le suivre.", null, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Vigilant", "Rien ne lui échappe !", null, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Infaillible", "Ne rate jamais sa cible.", null, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Puissant", "Une force qui impose le respect.", null, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Invincible", "Les coups semblent ne rien lui faire...", null, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Obstiné", "Une vraie force de caractère !", null, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Maniaque", "Semble ne rien savoir faire d'autre que son objectif du moment.", null, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, effects, prerequis);
+		creerPerk(null, "Terrifiant", "Sa simple présence encourage les défections.", null, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, effects, prerequis);
+		creerPerk(null, "Increvable", "Même réduit en charpie, il bouge encore...", null, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, effects, prerequis);
+		creerPerk(null, "Sanguinaire", "Adepte de la décoration extérieure", null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, effects, prerequis);
 	}
 	
 	if(bllDomains.getAll().count() === 0 && bllClasses.getAll().count() === 0) {
@@ -187,41 +54,108 @@ var creerDonneesBase = function() {
 
 		var idAnge = bllClasses.add(null, 'Ange', 'Guerrier céleste.', idLumiere, ['FOR'], null);
 		classes.push(idAnge);
-		creerPerksAnge(idAnge);
+		creerPerk(null, "Précis", "Une précision...divine !", idAnge, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, null, null);
+		creerPerk(null, "Bienveillant", "Il aime son prochain", idAnge, 0, 2, 0, 2, 1, 0, 2, -2, 0, -2, null, null);
 			
 		var idErmite = bllClasses.add(null, 'Ermite', 'Méfiez-vous de son air paisible.', idNature, ['DEX'], null);
 		classes.push(idErmite);
+		creerPerk(null, "Discret", "ne fait pas un bruit", idErmite, 0, 0, 2, 0, 0, 0, 0, -2, 0, 0, null, null);
+		creerPerk(null, "Vif", "Difficile de le suivre", idErmite, 2, 2, 1, 0, -1, 0, 0, 0, 0, 0, null, null);
+		
 		var idDemon = bllClasses.add(null, 'Démon', 'Prince de la destruction', idChaos, ['RES'], null);
 		classes.push(idDemon);
+		creerPerk(null, "Colossal", "est tombé une fois...de sommeil", idDemon, 0, 0, 0, 3, 3, 0, -3, 3, 0, 0, null, null);
+		creerPerk(null, "Mortel", "Un seul coup suffit", idDemon, 0, 0, 0, 1, 0, 0, -1, 3, -3, 3, null, null);
+
 		var idAssassin = bllClasses.add(null, 'Assassin', 'Ne croisez pas son chemin.', idEsprit, ['PER'], null);
 		classes.push(idAssassin);
+		creerPerk(null, "Invisible", "Ce qu'on ne voit pas n'est pas inquiétant", idAssassin, 1, 1, 0, -2, -2, 0, 0, -6, 0, 0, null, null);
+		creerPerk(null, "Rusé", "trouve toujours une combine pour arriver à ses fins", idAssassin, 0, 4, 0, -3, 0, 3, 2, -2, 0, 0, null, null);
+
 		var idHorreur = bllClasses.add(null, 'Horreur', 'Votre plus grand cauchemar.', idTenebre, ['RAP'], null);
 		classes.push(idHorreur);
+		creerPerk(null, "Cauchemardesque", "Instille la peur à sa simple évocation", idHorreur, 1, 0, 0, 0, 0, -2, 0, 5 , 0, 0, null, null);
+		creerPerk(null, "Foudroyant", "Frappe plus vite que son ombre. ", idHorreur, 5, -2, -2, 4, -2, 0, -2, 4, 0, 0, null, null);
 
-		classes.push(bllClasses.add(null, 'Moine', 'Ardent défenseur de la foi.', idLumiere, [/*'FOR', */'RES', 'MEN'], idAnge));
-		classes.push(bllClasses.add(null, 'Chevalier', 'Protecteur des faibles et bras armé de la justice.', idLumiere, ['DEX', 'RES'], idAnge));
+		var idMoine = bllClasses.add(null, 'Moine', 'Ardent défenseur de la foi.', idLumiere, [/*'FOR', */'RES', 'MEN'], idAnge);
+		classes.push(idMoine);
+		creerPerk(null, "Imperturbable", "Difficile de le distraire", idMoine, -2, -2, 0, 0, 3, 5, 0, 0, 0, 0, null, null);
+		creerPerk(null, "Prudent", "Se met en retrait pour mieux servir", idMoine, 0, 2, 0, 0, 2, 0, 0, -1, 0, 0, null, null);
+		
+		var idChevalier = bllClasses.add(null, 'Chevalier', 'Protecteur des faibles et bras armé de la justice.', idLumiere, ['DEX', 'RES'], idAnge);
+		classes.push(idChevalier);
+		creerPerk(null, "Emérite", "Des années d'entrainement", idChevalier, 0, 2, 2, -1, 1, 0, 0, 0, 0, 0, null, null);
+		creerPerk(null, "Musclé", "Il faut pouvoir porter ces armures rutillantes", idChevalier, 0, -3, 2, 3, 2, 0, 0, 1, 0, 0, null, null);
+
 		//classes.push(bllClasses.add(null, 'Paladin', 'Chevalier investi de pouvoirs divins.', idLumiere, ['DEX', 'FOR', 'MEN']));
-		classes.push(bllClasses.add(null, 'Enchanteur', 'Détenteur de savoirs anciens, et magicien émérite.', idLumiere, [/*'RAP',*/ 'PER', 'MEN'], idAnge));
+		var idEnchanteur = bllClasses.add(null, 'Enchanteur', 'Détenteur de savoirs anciens, et magicien émérite.', idLumiere, [/*'RAP',*/ 'PER', 'MEN'], idAnge);
+		classes.push(idEnchanteur);
+		creerPerk(null, "Intelligent", "Une grande soif de connaissances", idEnchanteur, 0, 4, 0, -3, 0, 3, 0, 0, 0, 0, null, null);
+		creerPerk(null, "Brillant", "Erudit", idEnchanteur, 0, 6, -4, 0, -4, 5, 0, 0, 0, 0, null, null);
 	
 		//classes.push(bllClasses.add(null, 'Ermite', 'Rusé et pas si seul.', idNature, ['RAP', 'RES', 'MEN']));
-		classes.push(bllClasses.add(null, 'Ranger', 'Bon pied bon oeil.', idNature, ['RAP', 'PER'/*, 'DEX'*/], idErmite));
-		classes.push(bllClasses.add(null, 'Druide', 'Gardien des savoirs ancestraux.', idNature, ['PER', /*'RES',*/ 'RES'], idErmite));
-		classes.push(bllClasses.add(null, 'Protecteur', 'Véritable force de la nature.', idNature, ['FOR', 'RES'/*, 'MEN'*/], idErmite));
+		var idRanger = bllClasses.add(null, 'Ranger', 'Bon pied bon oeil.', idNature, ['RAP', 'PER'/*, 'DEX'*/], idErmite);
+		classes.push(idRanger);
+		creerPerk(null, "Furtif", "Sait se fondre dans le décor", idRanger, 2, 0, 0, -1, -1, 0, 0, -4, 0, 0, null, null);
+		creerPerk(null, "Astucieux", "connait mille techniques", idRanger, 1, 1, 2, 0, 0, 0, 1, -1, 0, 0, null, null);
 	
-		classes.push(bllClasses.add(null, 'Artificier', 'BoOm !', idChaos, [/*'RAP',*/ 'PER', 'DEX'], idDemon));
+		var idDruide = bllClasses.add(null, 'Druide', 'Gardien des savoirs ancestraux.', idNature, ['PER', /*'RES',*/ 'RES'], idErmite);
+		classes.push(idDruide);
+		creerPerk(null, "Clairvoyant", "Voit tout, devine tout", idDruide, -2, 6, 0, 0, 0, 0, 0, 0, 0, 0, null, null);
+		creerPerk(null, "Primitif", "Robuste mais peu perspicace", idDruide, 2, 2, 0, 2, 3, -5, -5, 2, 0, 0, null, null);
+	
+		var idProtecteur = bllClasses.add(null, 'Protecteur', 'Véritable force de la nature.', idNature, ['FOR', 'RES'/*, 'MEN'*/], idErmite);
+		classes.push(idProtecteur);
+		creerPerk(null, "Invulnérable", "Une vraie force de la nature", idProtecteur, -3, -3, -3, 4, 5, 4, 0, 2, 0, 0, null, null);
+		creerPerk(null, "Destructeur", "Une puissance phénoménale", idProtecteur, 0, 0, 0, 5, 0, -2, -2, 3, 0, 1, null, null);
+		
+		var idArtificier = bllClasses.add(null, 'Artificier', 'BoOm !', idChaos, [/*'RAP',*/ 'PER', 'DEX'], idDemon);
+		classes.push(idArtificier);
+		creerPerk(null, "Minutieux", "S'applique à ce que ses équipements soient parfaitement utilisables", idArtificier, 0, 1, 3, 0, 0, 0, 1, 0, 0, 0, null, null);
+		creerPerk(null, "Perfectioniste", "Jamais pris en défaut", idArtificier, -2, 3, 3, 0, 0, 0, 0, 0, 0, 0, null, null);
+	
 		//classes.push(bllClasses.add(null, 'Pillard', 'Charognard, sournois et cruel.', idChaos, ['RAP', 'FOR', 'RES']));
-		classes.push(bllClasses.add(null, 'Berserker', 'Violent et incontrolable.', idChaos, ['RAP', /*'DEX',*/ 'FOR'], idDemon));
-		classes.push(bllClasses.add(null, 'Pyromancien', 'Maîtrise les arcanes du feu.', idChaos, ['RAP', /*'PER'*/, 'MEN'], idDemon));
+		var idBerserker = bllClasses.add(null, 'Berserker', 'Violent et incontrolable.', idChaos, ['RAP', /*'DEX',*/ 'FOR'], idDemon);
+		classes.push(idBerserker);
+		creerPerk(null, "Barbare", "Une violence extrême", idBerserker, 1, -1, 1, 3, 2, -2, -3, 3, 0, 0, null, null);
+		creerPerk(null, "Kamikaze", "Le sacrifice de soi à l'état pur", idBerserker, 2, 2, 4, 3, -5, -5, 0, 6, 0, 0, null, null);
 	
-		classes.push(bllClasses.add(null, 'Elementaire', 'Imperturbable.', idEsprit, ['FOR', /*'RES',*/ 'MEN'], idAssassin));
-		classes.push(bllClasses.add(null, 'Duelliste', 'Rapide et précis.', idEsprit, ['RAP', /*'PER',*/ 'DEX'], idAssassin));
+		var idPyromancien = bllClasses.add(null, 'Pyromancien', 'Maîtrise les arcanes du feu.', idChaos, ['RAP', /*'PER'*/, 'MEN'], idDemon);
+		classes.push(idPyromancien);
+		creerPerk(null, "Fou", "Complètement imprévisible", idPyromancien, 2, -5, 0, 0, 0, 6, -5, 3, 0, 0, null, null);
+		creerPerk(null, "Frèle", "Une faible constitution peut s'avérer être un avantage décisif", idPyromancien, 4, 0, 3, -1, -2, 0, 0, -2, 0, 0, null, null);
+		
+		var idElementaire = bllClasses.add(null, 'Elementaire', 'Imperturbable.', idEsprit, ['FOR', /*'RES',*/ 'MEN'], idAssassin);
+		classes.push(idElementaire);
+		creerPerk(null, "Mystérieux", "Mais qui est-il ?", idElementaire, 0, 0, 0, 1, -1, 2, 0, 2, 0, 0, null, null);
+		creerPerk(null, "Implacable", "Ira jusqu'au bout de ses ressources", idElementaire, 0, 0, 2, 3, 0, 1, 0, 1, 0, 0, null, null);
+	
+		var idDuelliste = bllClasses.add(null, 'Duelliste', 'Rapide et précis.', idEsprit, ['RAP', /*'PER',*/ 'DEX'], idAssassin);
+		classes.push(idDuelliste);
+		creerPerk(null, "Virtuose", "Un véritable spectacle", idDuelliste, 4, 4, 5, -3, -3, -3, 0, 0, 0, 0, null, null);
+		creerPerk(null, "Maître d'arme", "Maîtrise tout type d'arme", idDuelliste, 2, 0, 6, -2, -2, 0, 0, 0, 0, 0, null, null);
+	
 		//classes.push(bllClasses.add(null, 'Génie', 'Cruel et malfaisant.', idEsprit, ['RAP', 'DEX', 'MEN']));
-		classes.push(bllClasses.add(null, 'Mage', 'La puissance de l\'esprit.', idEsprit, ['RAP', /*'PER',*/ 'MEN'], idAssassin));
+		var idMage = bllClasses.add(null, 'Mage', 'La puissance de l\'esprit.', idEsprit, ['RAP', /*'PER',*/ 'MEN'], idAssassin);
+		classes.push(idMage);
+		creerPerk(null, "Distrait", "Perdu dans ses pensées", idMage, 0, 0, 0, 0, 0, 3, -2, -3, 0, 0, null, null);
+		creerPerk(null, "Savant", "Une bible de connaissances", idMage, 0, 1, 0, 0, -4, 6, 0, 0, 0, 0, null, null);
 	
 		//classes.push(bllClasses.add(null, 'Brute', 'Bête et méchant.', idTenebre, ['DEX', 'FOR', 'RES']));
-		classes.push(bllClasses.add(null, 'Chevalier noir', 'Protecteur des forts et bras armé de l\'injustice.', idTenebre, ['DEX', 'FOR'/*, 'RES'*/ /*MEN*/], idHorreur));
-		classes.push(bllClasses.add(null, 'Liche', 'Se nourrit des vivants.', idTenebre, ['PER', 'FOR'], idHorreur));
-		classes.push(bllClasses.add(null, 'Sombremage', 'Morts ! Levez-vous !', idTenebre, ['DEX', 'MEN'], idHorreur));
+		var idChevalierNoir = bllClasses.add(null, 'Chevalier noir', 'Protecteur des forts et bras armé de l\'injustice.', idTenebre, ['DEX', 'FOR'/*, 'RES'*/ /*MEN*/], idHorreur);
+		classes.push(idChevalierNoir);
+		creerPerk(null, "Féroce", "Un danger permanent", idChevalierNoir, 0, 0, 1, 2, 1, 0, 0, 1, 0, 0, null, null);
+		creerPerk(null, "Sauvage", "Aucune notion de civilité", idChevalierNoir, 1, 0, 1, 2, 0, 0, -1, 1, 1, 0, null, null);
+	
+		var idLiche = bllClasses.add(null, 'Liche', 'Se nourrit des vivants.', idTenebre, ['PER', 'FOR'], idHorreur);
+		classes.push(idLiche);
+		creerPerk(null, "Inquisiteur", "Rien ne lui échappe !", idLiche, -1, 4, 0, 1, 0, 0, 0, 1, 0, 0, null, null);
+		creerPerk(null, "Impitoyable", "Ne vous laisse aucunes chances", idLiche, 0, 1, -3, 3, 0, 0, 0, 3, -2, 3, null, null);
+	
+		var idSombremage = bllClasses.add(null, 'Sombremage', 'Morts ! Levez-vous !', idTenebre, ['DEX', 'MEN'], idHorreur);
+		classes.push(idSombremage);
+		creerPerk(null, "Perspicace", "Visualise bien les dynamiques de groupes", idSombremage, -1, 2, 3, -1, -1, 2, 2, -2, 0, 0, null, null);
+		creerPerk(null, "Discipliné", "Sait attendre le bon moment pour frapper", idSombremage, -3, 2, 2, 0, 0, 3, 2, -1, 1, 0, null, null);
 	}
 
 	if(bllEquipments.getAll().count() === 0) {
