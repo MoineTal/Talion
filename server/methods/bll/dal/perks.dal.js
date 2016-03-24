@@ -1,3 +1,7 @@
+Perks.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+});
+
 // PRIVATE
 var getPerkAll = function() {
 	return Perks.find();

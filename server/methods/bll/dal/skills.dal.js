@@ -1,3 +1,24 @@
+Skills.before.insert(function (id, doc) {
+	var classe = Classes.findOne(doc.idClasse);
+	doc.nameClasse = classe && classe.name;
+	doc.createdAt = new Date();
+});
+
+Skills.after.insert(function(id, doc) {
+	var msg = 'Nouvelle compétence disponible ';
+	if(doc.idClasse) {
+		msg += 'pour la classe ' + doc.nameClasse + ' ';
+	}
+	News.insert({
+		parent : doc._id,
+		body : msg + ' : ' + doc.name,
+		category : 'Arène',
+		level : '2',
+		targets : [doc._id],
+		owner : doc.owner
+	});	
+});
+
 // PRIVATE
 var getSkillAll = function() {
 	return Skills.find();

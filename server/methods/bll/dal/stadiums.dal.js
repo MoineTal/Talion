@@ -1,3 +1,7 @@
+Stadiums.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+});
+
 // PRIVATE
 var getStadiumAll = function() {
 	return Stadiums.find();

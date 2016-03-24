@@ -1,3 +1,33 @@
+// denormalisation du nom de domaine
+Classes.before.insert(function (id, doc) {
+	console.log('Classes.before.insert ' + id);
+	var domain = Domains.findOne(doc.idDomain);
+	doc.nameDomain = domain && domain.name;
+	doc.createdAt = new Date();
+
+	if(doc.idClasseMaitre) {
+		var classe = Classes.findOne(doc.idClasseMaitre);
+		doc.nameClasseMaitre = classe && classe.name;
+	}
+});
+
+Classes.after.insert(function(id, doc) {
+	News.insert({
+		parent : doc._id,
+		body : 'Nouvelle classe disponible : ' + doc.name,
+		category : 'Arène',
+		level : '2',
+		targets : [doc._id],
+		owner : doc.owner
+	});	
+});
+
+/*
+Classes.after.insert(function (id, doc) {
+});
+*/
+
+
 // PRIVATE
 var getClasseAll = function() {
 	return Classes.find();

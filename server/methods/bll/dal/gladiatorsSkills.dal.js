@@ -1,3 +1,12 @@
+GladiatorSkills.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+	var glad = Gladiators.findOne(doc.idGladiator);
+	var skill = Skills.findOne(doc.idSkill);
+	doc.nameGladiator = glad.name;
+	doc.nameSkill = skill.name;
+});
+
+
 // PRIVATE
 var getGladiatorSkillAll = function() {
 	return GladiatorSkills.find();

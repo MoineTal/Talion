@@ -1,3 +1,24 @@
+Equipments.before.insert(function (id, doc) {
+	var classe = Classes.findOne(doc.idClasse);
+	doc.nameClasse = classe && classe.name;
+	doc.createdAt = new Date();
+});
+
+Equipments.after.insert(function(id, doc) {
+	var msg = 'Nouvel équipement disponible ';
+	if(doc.idClasse) {
+		msg += 'pour la classe ' + doc.nameClasse + ' ';
+	}
+	News.insert({
+		parent : doc._id,
+		body : msg + ' : ' + doc.name,
+		category : 'Arène',
+		level : '2',
+		targets : [doc._id],
+		owner : doc.owner
+	});	
+});
+
 // PRIVATE
 var getEquipmentAll = function() {
 	return Equipments.find();

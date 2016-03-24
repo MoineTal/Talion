@@ -1,3 +1,30 @@
+/*Teams.after.find(function (userId, selector, options, cursor) {
+});*/
+	
+Teams.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+	var chapter = Chapters.findOne(doc.idChapter);
+	doc.nameChapter = chapter && chapter.name;
+	doc.pause = false;
+	doc.gold = config.team.INIT_GOLD;
+	doc.maxGlad = config.team.INIT_MAX_GLAD;
+});
+
+Teams.after.insert(function(id, doc) {
+	News.insert({
+		parent : doc._id,
+		body : 'Création de l\'équipe ' + doc.name,
+		category : 'Equipe',
+		level : '1',
+		targets : [doc._id],
+		owner : doc.owner
+	});	
+});
+
+Teams.after.update(function(id, doc) {
+	Gladiators.update({ idTeam : doc._id }, {$set : { nameTeam : doc.name }});	
+});
+
 // PRIVATE
 var getTeamAll = function() {
 	return Teams.find();

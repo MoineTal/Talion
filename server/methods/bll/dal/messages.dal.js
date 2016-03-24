@@ -1,3 +1,7 @@
+Messages.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+});
+
 // PRIVATE
 var getMessageAll = function() {
 	return Messages.find();

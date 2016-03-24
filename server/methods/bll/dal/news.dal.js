@@ -1,3 +1,8 @@
+News.before.insert(function (id, doc) {
+	doc.obsolete = false;
+	doc.createdAt = new Date();
+});
+
 // PRIVATE
 var getNewAll = function() {
 	return News.find();

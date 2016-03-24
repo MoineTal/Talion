@@ -1,3 +1,7 @@
+Tactics.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+});
+
 // PRIVATE
 var getTacticAll = function() {
 	return Tactics.find();

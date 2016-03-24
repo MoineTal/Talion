@@ -1,3 +1,7 @@
+GladiatorPerks.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+});
+
 // PRIVATE
 var getGladiatorPerkAll = function() {
 	return GladiatorPerks.find();

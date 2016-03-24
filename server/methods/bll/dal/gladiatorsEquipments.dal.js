@@ -1,3 +1,7 @@
+GladiatorEquipments.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+});
+
 // PRIVATE
 var getGladiatorEquipmentAll = function() {
 	return GladiatorEquipments.find();

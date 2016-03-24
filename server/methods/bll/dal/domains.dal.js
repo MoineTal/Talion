@@ -1,3 +1,30 @@
+Domains.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+});
+
+Domains.after.insert(function(id, doc) {
+	News.insert({
+		parent : doc._id,
+		body : 'Nouveau domaine disponible : ' + doc.name,
+		category : 'Arène',
+		level : '3',
+		targets : [doc._id],
+		owner : doc.owner
+	});	
+});
+
+//denormalisation du nom de domaine
+Domains.after.update(function (userId, doc, fieldNames, modifier, options) {
+	console.log('Domains.after.update ' + userId);
+	console.log(fieldNames);
+	
+	Classes.update({ idDomain : doc._id}, 
+		{ $set : { nameDomain : doc.name }
+		}, 
+		{ multi: true }
+	);
+});
+
 // PRIVATE
 var getDomainAll = function() {
 	return Domains.find();

@@ -1,3 +1,16 @@
+FightGladiators.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+	var glad = Gladiators.findOne(doc.idGladiator);
+	var team = Teams.findOne(glad && glad.idTeam);
+	var chapter = Chapters.findOne(team && team.idChapter);
+	doc.nameGladiator = glad && glad.name;
+	// affectation des données de dénormalisation
+	doc.idTeam = team && team._id;
+	doc.nameTeam = team && team.name;
+	doc.idChapter = chapter && chapter._id;
+	doc.nameChapter = chapter && chapter.name;
+});
+
 /*// PRIVATE
 var getFightGladiatorAll = function() {
 	return FightGladiators.find();

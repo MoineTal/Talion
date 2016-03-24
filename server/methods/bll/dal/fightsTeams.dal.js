@@ -1,3 +1,9 @@
+FightTeams.before.insert(function (id, doc) {
+	doc.createdAt = new Date();
+	//doc.teams[i].color = '9'; // TODO à générer selon le nombre d'équipes déjà presentes dans le combat
+});
+
+
 /*// PRIVATE
 var getFightTeamAll = function() {
 	return FightTeams.find();
