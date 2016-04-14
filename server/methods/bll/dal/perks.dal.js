@@ -1,5 +1,10 @@
 Perks.before.insert(function (id, doc) {
 	doc.createdAt = new Date();
+
+	if(doc.idClasse && !doc.nameClasse) {
+		var classe = Classes.findOne(doc.idClasse);
+		doc.nameClasse = classe && classe.name;
+	}
 });
 
 // PRIVATE
@@ -12,13 +17,17 @@ var getPerk = function(idPerk) {
 	return Perks.findOne({ _id : idPerk });
 }
 
-var addPerk = function(userId, name, desc, idClasse, prerequis, attributes, fightMisc, effects) {
-	//check(userId, Meteor.users);
+var addPerk = function(userId, code, name, desc, idClasse, nameClasse, prerequis, attributes, fightMisc, effects) {
+	check(code, String);
 	check(name, String);
 	check(desc, String);
+	console.log('dal.addPerk ' + name);
 	return Perks.insert({
+		code : code,
 		name : name,
 		desc : desc,
+		idClasse : idClasse,
+		nameClasse : nameClasse,
 		prerequis : prerequis,
 		attributes : attributes,
 		fightMisc: fightMisc,
@@ -31,6 +40,11 @@ var addPerk = function(userId, name, desc, idClasse, prerequis, attributes, figh
 var delPerk = function(idPerk) {
 	//	check(idPerk, Number);
 	Perks.remove(idPerk);
+}
+
+var delByCode = function(codePerk) {
+	check(codePerk, String);
+	Perks.remove({ code : codePerk });
 }
 
 var updPerkName = function(idPerk, name) {
@@ -49,5 +63,8 @@ dalPerks = {
 		get : getPerk,
 		add : addPerk,
 		del : delPerk,
+		delByCode : delByCode,
 		updName : updPerkName		
 }
+
+Mods.perks = dalPerks;

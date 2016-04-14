@@ -1,4 +1,9 @@
 // Publie les données en base pour exploitation côté client
+Meteor.publish(null, function () {
+	return Versions.find();
+});
+
+// Publie les données en base pour exploitation côté client
 Meteor.publish("Chapters", function () {
 	return Chapters.find();
 });

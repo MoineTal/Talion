@@ -27,15 +27,22 @@ var getChapterAll = function() {
 }
 
 var getChapter = function(idChapter) {
-//	check(idChapter, Number);
+	check(idChapter, String);
 	return Chapters.findOne({ _id : idChapter });
 }
 
-var addChapter = function(userId, name, desc) {
+var getByCode = function(codeChapter) {
+	check(codeChapter, String);
+	return Chapters.findOne({ code : codeChapter });
+}
+
+var addChapter = function(userId, code, name, desc) {
+	check(code, String);
+	check(name, String);
+	check(desc, String);
 	console.log('dal.addChapter ' + name);
-//	check(name, String);
-//	check(desc, String);
 	return Chapters.insert({
+		code : code,
 		name : name,
 		desc : desc,
 		owner : userId
@@ -43,8 +50,13 @@ var addChapter = function(userId, name, desc) {
 }
 
 var delChapter = function(idChapter) {
-//	check(idChapter, Number);
+	check(idChapter, String);
 	Chapters.remove(idChapter);
+}
+
+var delByCode = function(codeChapter) {
+	check(codeChapter, String);
+	Chapters.remove({ code : codeChapter });
 }
 
 var updChapterName = function(idChapter, name) {
@@ -71,8 +83,12 @@ var updChapterDesc = function(idChapter, desc) {
 dalChapters = {
 		getAll : getChapterAll,
 		get : getChapter,
+		getByCode : getByCode,
 		add : addChapter,
 		del : delChapter,
+		delByCode : delByCode,
 		updName : updChapterName,		
 		updDesc : updChapterDesc		
 }
+
+Mods.chapters = dalChapters;

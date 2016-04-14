@@ -1,6 +1,5 @@
 // denormalisation du nom de domaine
 Classes.before.insert(function (id, doc) {
-	console.log('Classes.before.insert ' + id);
 	var domain = Domains.findOne(doc.idDomain);
 	doc.nameDomain = domain && domain.name;
 	doc.createdAt = new Date();
@@ -22,12 +21,6 @@ Classes.after.insert(function(id, doc) {
 	});	
 });
 
-/*
-Classes.after.insert(function (id, doc) {
-});
-*/
-
-
 // PRIVATE
 var getClasseAll = function() {
 	return Classes.find();
@@ -43,11 +36,20 @@ var getClasse = function(idClasse) {
 	return Classes.findOne({ _id : idClasse });
 }
 
-var addClasse = function(userId, name, desc, idDomain, attributes, maitre) {
+var getByCode = function(codeClasse) {
+	check(codeClasse, String);
+	console.log("classes.getByCode.codeClasse="+codeClasse);
+	return Classes.findOne({ code : codeClasse });
+}
+
+var addClasse = function(userId, code, name, desc, idDomain, attributes, maitre) {
+	check(code, String);
 	check(name, String);
 	check(desc, String);
-	check(idDomain, String);
+	console.log('dal.addClasse ' + name);
+//	check(idDomain, String);
 	return Classes.insert({
+		code : code,
 		name : name,
 		desc : desc,
 		idDomain : idDomain,
@@ -60,6 +62,11 @@ var addClasse = function(userId, name, desc, idDomain, attributes, maitre) {
 var delClasse = function(idClasse) {
 	check(idClasse, String);
 	Classes.remove(idClasse);
+}
+
+var delByCode = function(codeClasse) {
+	check(codeClasse, String);
+	Classes.remove({ code : codeClasse });
 }
 
 var updClasseName = function(idClasse, name) {
@@ -86,8 +93,13 @@ var updClasseDesc = function(idClasse, desc) {
 dalClasses = {
 		getAll : getClasseAll,
 		get : getClasse,
+		getByCode : getByCode,
 		add : addClasse,
 		del : delClasse,
+		delByCode : delByCode,
 		updName : updClasseName,		
 		updDesc : updClasseDesc
 }
+
+
+Mods.classes = dalClasses;
