@@ -20,6 +20,32 @@ Skills.after.insert(function(id, doc) {
 });
 
 // PRIVATE
+
+// calcule les effets des compétences
+var calculerEffets = function(effets, val, valName, cib) {
+	var effet = null;
+
+	if(val != 0) {
+		var effect  = 
+		{ 	op1: { what : valName, who : cib }, 
+			op1val: null,					
+			op: 'ADD',
+			op2: { op1 : { what : 'NIV', who : 'CMP' },
+				op: 'MUL',
+				op2: null,
+				op2val: val },
+			op2val:null
+        };
+		
+		effects.push();
+	}
+
+	if(effet) {
+		effets.push(effet);
+	}
+}
+
+
 var getSkillAll = function() {
 	return Skills.find();
 }
@@ -35,7 +61,95 @@ var getSkillByClasse = function(idClasse) {
 	return Skills.find({ $or: [ { idClasse : idClasse }, { idClasse : null }]});
 }
 
-var addSkill = function(userId, name, desc, verb, action, active, idClasse, type, initLvl, prerequis, targetingEffects, effects, tests, succesEffects) {
+/* Ajoute une compétence en calculant ses caractéristiques à partir des éléments fournis */
+var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, esq, tou, pui, vol, arm, vie, sou, mor, foc, mnc, sur, letal, affect, passive, noTest) {
+	check(type, String);
+	check(code, String);
+	check(name, String);
+	check(desc, String);
+	check(cible, String);
+	//check(classe, String);
+	check(vit, Number);
+	check(esq, Number);
+	check(tou, Number);
+	check(pui, Number);
+	check(vol, Number);
+	check(arm, Number);
+	check(vie, Number);
+	check(sou, Number);
+	check(mor, Number);
+	check(foc, Number);
+	check(mnc, Number);
+	check(sur, Number);
+	check(letal, Number);
+
+	// compétences de classe à 0, sinon 1.
+	var initLvl = 0;
+	initLvl= classe && 1;
+	var targetingEffects = null, effects = null,  tests = null, successEffects = null;
+	
+	if(foc != 0 || mnc != 0) {
+		targetingEffects = [];
+		
+		// la cible définitive est soi-même si c'est une action qui affecte VIE SOU ou MOR,
+		// sinon, c'est la cible
+		var cibleDefinitive = affect ? 'ME': cib;
+		calculerEffets(effets, foc, 'FOC', cibleDefinitive);
+		calculerEffets(effets, mnc, 'MNC', cibleDefinitive);
+	}
+
+	// passives
+	if(passive) {
+		// affecte les effets.
+		if(vit != 0 || esq != 0 || tou != 0 || pui != 0 || vol != 0 || arm != 0 || vie != 0 || sou != 0 || mor != 0 || sur != 0 || letal != 0) {
+			effects = [];
+			calculerEffets(effects, vit, 'VIT', cib);
+			calculerEffets(effects, esq, 'ESQ', cib);
+			calculerEffets(effects, tou, 'TOU', cib);
+			calculerEffets(effects, pui, 'PUI', cib);
+			calculerEffets(effects, vol, 'VOL', cib);
+			calculerEffets(effects, arm, 'ARM', cib);
+//			if(!affect){
+				calculerEffets(effects, vie, 'VIE', cib);
+				calculerEffets(effects, sou, 'SOU', cib);
+				calculerEffets(effects, mor, 'MOR', cib);				
+//			} else {
+//			}
+			calculerEffets(effects, sur, 'SUR', cib);
+			calculerEffets(effects, letal, 'LET', cib);			
+		}
+	} else {
+		// affecte les effets de succès.
+		if(vit != 0 || esq != 0 || tou != 0 || pui != 0 || vol != 0 || arm != 0 || vie != 0 || sou != 0 || mor != 0 || sur != 0 || letal != 0) {
+			successEffects = [];
+			var cibleDefinitive = affect ? 'ME': cib;
+			calculerEffets(successEffects, vit, 'VIT', cibleDefinitive);
+			calculerEffets(successEffects, esq, 'ESQ', cibleDefinitive);
+			calculerEffets(successEffects, tou, 'TOU', cibleDefinitive);
+			calculerEffets(successEffects, pui, 'PUI', cibleDefinitive);
+			calculerEffets(successEffects, vol, 'VOL', cibleDefinitive);
+			calculerEffets(successEffects, arm, 'ARM', cibleDefinitive);
+//			if(!affect){
+				calculerEffets(successEffects, vie, 'VIE', cib);
+				calculerEffets(successEffects, sou, 'SOU', cib);
+				calculerEffets(successEffects, mor, 'MOR', cib);				
+//			} else {
+//			}
+			calculerEffets(successEffects, sur, 'SUR', cibleDefinitive);
+			calculerEffets(successEffects, letal, 'LET', cibleDefinitive);
+			
+			// TODO TEST
+		}		
+		
+		
+	}
+	
+	// inscription en BDD
+	addSkillToDB(userId, name, desc, name+'er', name+'e', !passive, idClasse, type, initLvl, null, targetingEffects, effects, tests, succesEffects);
+}
+
+
+var addSkillToDB = function(userId, name, desc, verb, action, active, idClasse, type, initLvl, prerequis, targetingEffects, effects, tests, succesEffects) {
 	//check(userId, Meteor.users);
 	check(name, String);
 	check(desc, String);
@@ -87,3 +201,5 @@ dalSkills = {
 		updName : updSkillName,
 		getByClasse : getSkillByClasse
 }
+
+Mods.skills = dalSkills;
