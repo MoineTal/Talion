@@ -325,6 +325,7 @@ var appliquerVersion = function(element) {
 		if(element.skills && element.skills.length > 0) {
 			_.each(element.skills, function(element, index, list) {
 				var classe = element.classe && Mods.classes.getByCode(element.classe);
+				console.log(classe);
 				var id = Mods.skills.add(null, element.type, element.code, element.name, element.desc, element.cible, classe, 
 					element.vit, element.esq, element.tou, element.pui, element.vol, element.arm, element.vie, element.sou, element.mor, 
 					element.foc, element.mnc, element.sur, element.letal, element.affect, element.passive, element.noTest);
@@ -349,6 +350,20 @@ var appliquerVersion = function(element) {
 /* Effectue le retour arrière d'une version */
 var retourArriereVersion = function(element) {
 	console.log('Mods.versions.retourArriereVersion ' + element.name);
+
+	// Skills
+	if(element.skills && element.skills.length > 0) {
+		_.each(element.skills, function(element, index, list) {
+			Mods.skills.delByCode(element.code);
+    	});
+	}
+
+	// Perks
+	if(element.perks && element.perks.length > 0) {
+		_.each(element.perks, function(element, index, list) {
+			Mods.perks.delByCode(element.code);
+    	});
+	}
 
 	// Classes
 	if(element.classes && element.classes.length > 0) {

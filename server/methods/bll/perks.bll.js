@@ -53,6 +53,11 @@ var delPerk = function(idPerk) {
 	dalPerks.del(idPerk);
 }
 
+var delByCode = function(code) {
+	check(code, String);
+	Perks.remove({ code : code });
+}
+
 var updPerkName = function(idPerk, name) {
 	dalPerks.updName(idPerk, name);
 }
@@ -63,5 +68,6 @@ bllPerks = {
 		get : getPerk,
 		add : addPerk,
 		del : delPerk,
+		delByCode : delByCode,
 		updName : updPerkName		
 }

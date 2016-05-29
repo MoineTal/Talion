@@ -85,7 +85,10 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 
 	// compétences de classe à 0, sinon 1.
 	var initLvl = 0;
-	initLvl= classe && 1;
+	if(idClasse== null) {
+		initLvl= 1;
+	}
+	//initLvl= idClasse && 1;
 	var targetingEffects = null, effects = null,  tests = null, successEffects = null;
 	
 	if(foc != 0 || mnc != 0) {
@@ -93,7 +96,7 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 		
 		// la cible définitive est soi-même si c'est une action qui affecte VIE SOU ou MOR,
 		// sinon, c'est la cible
-		var cibleDefinitive = affect ? 'ME': cib;
+		var cibleDefinitive = affect ? 'ME': cible;
 		calculerEffets(effets, foc, 'FOC', cibleDefinitive);
 		calculerEffets(effets, mnc, 'MNC', cibleDefinitive);
 	}
@@ -103,26 +106,26 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 		// affecte les effets.
 		if(vit != 0 || esq != 0 || tou != 0 || pui != 0 || vol != 0 || arm != 0 || vie != 0 || sou != 0 || mor != 0 || sur != 0 || letal != 0) {
 			effects = [];
-			calculerEffets(effects, vit, 'VIT', cib);
-			calculerEffets(effects, esq, 'ESQ', cib);
-			calculerEffets(effects, tou, 'TOU', cib);
-			calculerEffets(effects, pui, 'PUI', cib);
-			calculerEffets(effects, vol, 'VOL', cib);
-			calculerEffets(effects, arm, 'ARM', cib);
+			calculerEffets(effects, vit, 'VIT', cible);
+			calculerEffets(effects, esq, 'ESQ', cible);
+			calculerEffets(effects, tou, 'TOU', cible);
+			calculerEffets(effects, pui, 'PUI', cible);
+			calculerEffets(effects, vol, 'VOL', cible);
+			calculerEffets(effects, arm, 'ARM', cible);
 //			if(!affect){
-				calculerEffets(effects, vie, 'VIE', cib);
-				calculerEffets(effects, sou, 'SOU', cib);
-				calculerEffets(effects, mor, 'MOR', cib);				
+				calculerEffets(effects, vie, 'VIE', cible);
+				calculerEffets(effects, sou, 'SOU', cible);
+				calculerEffets(effects, mor, 'MOR', cible);				
 //			} else {
 //			}
-			calculerEffets(effects, sur, 'SUR', cib);
-			calculerEffets(effects, letal, 'LET', cib);			
+			calculerEffets(effects, sur, 'SUR', cible);
+			calculerEffets(effects, letal, 'LET', cible);			
 		}
 	} else {
 		// affecte les effets de succès.
 		if(vit != 0 || esq != 0 || tou != 0 || pui != 0 || vol != 0 || arm != 0 || vie != 0 || sou != 0 || mor != 0 || sur != 0 || letal != 0) {
 			successEffects = [];
-			var cibleDefinitive = affect ? 'ME': cib;
+			var cibleDefinitive = affect ? 'ME': cible;
 			calculerEffets(successEffects, vit, 'VIT', cibleDefinitive);
 			calculerEffets(successEffects, esq, 'ESQ', cibleDefinitive);
 			calculerEffets(successEffects, tou, 'TOU', cibleDefinitive);
@@ -130,9 +133,9 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 			calculerEffets(successEffects, vol, 'VOL', cibleDefinitive);
 			calculerEffets(successEffects, arm, 'ARM', cibleDefinitive);
 //			if(!affect){
-				calculerEffets(successEffects, vie, 'VIE', cib);
-				calculerEffets(successEffects, sou, 'SOU', cib);
-				calculerEffets(successEffects, mor, 'MOR', cib);				
+				calculerEffets(successEffects, vie, 'VIE', cible);
+				calculerEffets(successEffects, sou, 'SOU', cible);
+				calculerEffets(successEffects, mor, 'MOR', cible);				
 //			} else {
 //			}
 			calculerEffets(successEffects, sur, 'SUR', cibleDefinitive);
@@ -145,7 +148,7 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 	}
 	
 	// inscription en BDD
-	addSkillToDB(userId, name, desc, name+'er', name+'e', !passive, idClasse, type, initLvl, null, targetingEffects, effects, tests, succesEffects);
+	addSkillToDB(userId, name, desc, name+'er', name+'e', !passive, idClasse, type, initLvl, null, targetingEffects, effects, tests, successEffects);
 }
 
 
@@ -182,6 +185,11 @@ var delSkill = function(idSkill) {
 	Skills.remove(idSkill);
 }
 
+var delByCode = function(code) {
+	check(code, String);
+	Skills.remove({ code : code });
+}
+
 var updSkillName = function(idSkill, name) {
 	//	check(idSkill, Number);
 	//	check(name, String);
@@ -198,6 +206,7 @@ dalSkills = {
 		get : getSkill,
 		add : addSkill,
 		del : delSkill,
+		delByCode : delByCode,
 		updName : updSkillName,
 		getByClasse : getSkillByClasse
 }
