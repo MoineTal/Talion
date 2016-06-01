@@ -26,23 +26,23 @@ var calculerEffets = function(effets, val, valName, cib) {
 	var effet = null;
 
 	if(val != 0) {
-		var effect  = 
+		effet  = 
 		{ 	op1: { what : valName, who : cib }, 
 			op1val: null,					
-			op: 'ADD',
+			op: (val > 0) ? 'ADD' : 'REM',
 			op2: { op1 : { what : 'NIV', who : 'CMP' },
 				op: 'MUL',
 				op2: null,
-				op2val: val },
+				op2val: (val > 0) ? val : -val },
 			op2val:null
         };
-		
-		effects.push();
 	}
 
 	if(effet) {
 		effets.push(effet);
 	}
+	//console.log(effets);
+	//return effets;
 }
 
 
@@ -90,22 +90,22 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 	}
 	//initLvl= idClasse && 1;
 	var targetingEffects = null, effects = null,  tests = null, successEffects = null;
-	
+	//console.log('#####################################################################');
 	if(foc != 0 || mnc != 0) {
-		targetingEffects = [];
+		targetingEffects = new Array();
 		
 		// la cible définitive est soi-même si c'est une action qui affecte VIE SOU ou MOR,
 		// sinon, c'est la cible
 		var cibleDefinitive = affect ? 'ME': cible;
-		calculerEffets(effets, foc, 'FOC', cibleDefinitive);
-		calculerEffets(effets, mnc, 'MNC', cibleDefinitive);
+		calculerEffets(targetingEffects, foc, 'FOC', cibleDefinitive);
+		calculerEffets(targetingEffects, mnc, 'MNC', cibleDefinitive);
 	}
 
 	// passives
 	if(passive) {
 		// affecte les effets.
 		if(vit != 0 || esq != 0 || tou != 0 || pui != 0 || vol != 0 || arm != 0 || vie != 0 || sou != 0 || mor != 0 || sur != 0 || letal != 0) {
-			effects = [];
+			effects = new Array();
 			calculerEffets(effects, vit, 'VIT', cible);
 			calculerEffets(effects, esq, 'ESQ', cible);
 			calculerEffets(effects, tou, 'TOU', cible);
@@ -113,9 +113,9 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 			calculerEffets(effects, vol, 'VOL', cible);
 			calculerEffets(effects, arm, 'ARM', cible);
 //			if(!affect){
-				calculerEffets(effects, vie, 'VIE', cible);
-				calculerEffets(effects, sou, 'SOU', cible);
-				calculerEffets(effects, mor, 'MOR', cible);				
+			calculerEffets(effects, vie, 'VIE', cible);
+			calculerEffets(effects, sou, 'SOU', cible);
+			calculerEffets(effects, mor, 'MOR', cible);				
 //			} else {
 //			}
 			calculerEffets(effects, sur, 'SUR', cible);
@@ -124,7 +124,7 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 	} else {
 		// affecte les effets de succès.
 		if(vit != 0 || esq != 0 || tou != 0 || pui != 0 || vol != 0 || arm != 0 || vie != 0 || sou != 0 || mor != 0 || sur != 0 || letal != 0) {
-			successEffects = [];
+			successEffects = new Array();
 			var cibleDefinitive = affect ? 'ME': cible;
 			calculerEffets(successEffects, vit, 'VIT', cibleDefinitive);
 			calculerEffets(successEffects, esq, 'ESQ', cibleDefinitive);
@@ -133,9 +133,9 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 			calculerEffets(successEffects, vol, 'VOL', cibleDefinitive);
 			calculerEffets(successEffects, arm, 'ARM', cibleDefinitive);
 //			if(!affect){
-				calculerEffets(successEffects, vie, 'VIE', cible);
-				calculerEffets(successEffects, sou, 'SOU', cible);
-				calculerEffets(successEffects, mor, 'MOR', cible);				
+			calculerEffets(successEffects, vie, 'VIE', cible);
+			calculerEffets(successEffects, sou, 'SOU', cible);
+			calculerEffets(successEffects, mor, 'MOR', cible);				
 //			} else {
 //			}
 			calculerEffets(successEffects, sur, 'SUR', cibleDefinitive);
@@ -146,13 +146,18 @@ var addSkill = function (userId, type, code, name, desc, cible, idClasse, vit, e
 		
 		
 	}
-	
+	//console.log(targetingEffects);
+	//console.log(effects);
+	//console.log(tests);
+	//console.log(successEffects);
+	//console.log('---------------------------------------------------------------------');
+
 	// inscription en BDD
-	addSkillToDB(userId, name, desc, name+'er', name+'e', !passive, idClasse, type, initLvl, null, targetingEffects, effects, tests, successEffects);
+	addSkillToDB(userId, code, name, desc, name+'er', name+'e', !passive, idClasse, type, initLvl, null, targetingEffects, effects, tests, successEffects);
 }
 
 
-var addSkillToDB = function(userId, name, desc, verb, action, active, idClasse, type, initLvl, prerequis, targetingEffects, effects, tests, succesEffects) {
+var addSkillToDB = function(userId, code, name, desc, verb, action, active, idClasse, type, initLvl, prerequis, targetingEffects, effects, tests, succesEffects) {
 	//check(userId, Meteor.users);
 	check(name, String);
 	check(desc, String);
@@ -161,7 +166,9 @@ var addSkillToDB = function(userId, name, desc, verb, action, active, idClasse, 
 	check(active, Boolean);
 	check(type, String);
 	check(initLvl, Number);
+	console.log('dal.addSkill ' + name);
 	return Skills.insert({
+		code : code,
 		name : name,
 		desc : desc,
 		verb : verb, 

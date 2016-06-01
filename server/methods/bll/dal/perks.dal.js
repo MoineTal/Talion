@@ -7,6 +7,21 @@ Perks.before.insert(function (id, doc) {
 	}
 });
 
+Perks.after.insert(function(id, doc) {
+	var msg = 'Nouveau trait de caractère disponible ';
+	if(doc.idClasse) {
+		msg += 'pour la classe ' + doc.nameClasse + ' ';
+	}
+	Perks.insert({
+		parent : doc._id,
+		body : msg + ' : ' + doc.name,
+		category : 'Arène',
+		level : '2',
+		targets : [doc._id],
+		owner : doc.owner
+	});	
+});
+
 // PRIVATE
 var getPerkAll = function() {
 	return Perks.find();

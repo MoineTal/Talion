@@ -143,7 +143,7 @@ var data = [{
 		{ type:'DEF', code:'REG', name:'Regain', desc:'1', cible:'cib', classe:'ENC', vit:4, esq:0, tou:0, pui:0, vol:0, arm:0, vie:5, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
 		{ type:'DEF', code:'SOU', name:'Soutien', desc:'1', cible:'cib', classe:'ENC', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:9, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
 		{ type:'OFF', code:'ENT', name:'Entraves', desc:'1', cible:'cib', classe:'ENC', vit:0, esq:-10, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
-		{ type:'OFF', code:'CHA', name:'Chasse', desc:'1', cible:'cib', classe:'RAN', vit:7, esq:3, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
+		{ type:'OFF', code:'CHS', name:'Chasse', desc:'1', cible:'cib', classe:'RAN', vit:7, esq:3, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'OFF', code:'VIS', name:'Visée', desc:'1', cible:'cib', classe:'RAN', vit:0, esq:0, tou:3, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:7 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'DEF', code:'VIV', name:'Vivacité', desc:'1', cible:'me', classe:'RAN', vit:5, esq:0, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null, passive:true },
 		{ type:'OFF', code:'PIE', name:'Pièges', desc:'1', cible:'cib', classe:'RAN', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:0, sou:3, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'SOU' },
@@ -153,7 +153,7 @@ var data = [{
 		{ type:'OFF', code:'ENC', name:'Enchevêtrement', desc:'1', cible:'opp', classe:'DRU', vit:0, esq:-5, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
 		{ type:'OFF', code:'BRU', name:'Brutalité', desc:'1', cible:'cib', classe:'PRO', vit:0, esq:0, tou:0, pui:7, vol:0, arm:3, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'DEF', code:'REN', name:'Renforcement', desc:'1', cible:'cib', classe:'PRO', vit:0, esq:0, tou:0, pui:0, vol:0, arm:9, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
-		{ type:'DEF', code:'REG', name:'Régénération', desc:'1', cible:'me', classe:'PRO', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:5, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null, passive:true },
+		{ type:'DEF', code:'RGN', name:'Régénération', desc:'1', cible:'me', classe:'PRO', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:5, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null, passive:true },
 		{ type:'OFF', code:'SEI', name:'Séisme', desc:'1', cible:'cib', classe:'PRO', vit:0, esq:0, tou:0, pui:0, vol:0, arm:-10, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
 		{ type:'OFF', code:'BOM', name:'Bombardements', desc:'1', cible:'opp', classe:'ART', vit:0, esq:0, tou:5, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'OFF', code:'GAZ', name:'Gazs', desc:'1', cible:'tous', classe:'ART', vit:0, esq:0, tou:3, pui:0, vol:0, arm:0, vie:0, sou:3, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'SOU' },
@@ -168,18 +168,18 @@ var data = [{
 		{ type:'OFF', code:'FLA', name:'Flammes', desc:'1', cible:'tous', classe:'PYR', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:-5, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'OFF', code:'IGN', name:'Ignition', desc:'1', cible:'cib', classe:'PYR', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:3, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'OFF', code:'EFF', name:'Effroi', desc:'1', cible:'cib', classe:'ELE', vit:0, esq:0, tou:0, pui:0, vol:5, arm:0, vie:0, sou:3, mor:2, foc:0 , mnc:0 , sur:0 , letal:0, affect:'MOR' },
-		{ type:'DEF', code:'CON', name:'Concile', desc:'1', cible:'cib', classe:'ELE', vit:0, esq:0, tou:0, pui:0, vol:9, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
+		{ type:'DEF', code:'CNC', name:'Concile', desc:'1', cible:'cib', classe:'ELE', vit:0, esq:0, tou:0, pui:0, vol:9, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
 		{ type:'DEF', code:'CNT', name:'Concentration', desc:'1', cible:'cib', classe:'ELE', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:5 , mnc:0 , sur:0 , letal:0, affect:null, passive:true },
 		{ type:'OFF', code:'PER', name:'Perdition', desc:'1', cible:'cib', classe:'ELE', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:-2, sou:0, mor:-1, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'OFF', code:'ESC', name:'Escrime', desc:'1', cible:'cib', classe:'DUE', vit:0, esq:0, tou:7, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:3 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'OFF', code:'HAR', name:'Harcèlement', desc:'1', cible:'cib', classe:'DUE', vit:3, esq:0, tou:7, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'SOU' },
 		{ type:'DEF', code:'MAI', name:'Maîtrise', desc:'1', cible:'me', classe:'DUE', vit:0, esq:0, tou:5, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null, passive:true },
-		{ type:'OFF', code:'DES', name:'Désarmement', desc:'1', cible:'cib', classe:'DUE', vit:0, esq:0, tou:-10, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
+		{ type:'OFF', code:'DSR', name:'Désarmement', desc:'1', cible:'cib', classe:'DUE', vit:0, esq:0, tou:-10, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
 		{ type:'OFF', code:'DOM', name:'Domination', desc:'1', cible:'cib', classe:'MAG', vit:3, esq:0, tou:0, pui:0, vol:4, arm:0, vie:0, sou:0, mor:3, foc:0 , mnc:0 , sur:0 , letal:0, affect:'MOR' },
 		{ type:'OFF', code:'CON', name:'Contresort', desc:'x% chance - niveau à 1 cmp opp.', cible:'cib', classe:'MAG', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
 		{ type:'DEF', code:'IMP', name:'Imperturbable', desc:'1', cible:'cib', classe:'MAG', vit:0, esq:0, tou:0, pui:0, vol:5, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null, passive:true },
 		{ type:'DEF', code:'DSO', name:'Désorientation', desc:'1', cible:'cib', classe:'MAG', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:0, sou:0, mor:0, foc:-10 , mnc:0 , sur:0 , letal:0, affect:null },
-		{ type:'OFF', code:'ASS', name:'Assaut', desc:'1', cible:'cib', classe:'CHN', vit:0, esq:0, tou:3, pui:7, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
+		{ type:'OFF', code:'AST', name:'Assaut', desc:'1', cible:'cib', classe:'CHN', vit:0, esq:0, tou:3, pui:7, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'OFF', code:'PRS', name:'Persécution', desc:'1', cible:'cib', classe:'CHN', vit:0, esq:0, tou:3, pui:0, vol:0, arm:0, vie:0, sou:7, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'SOU' },
 		{ type:'OFF', code:'DSL', name:'Désolation', desc:'1', cible:'opp', classe:'CHN', vit:0, esq:0, tou:0, pui:0, vol:0, arm:0, vie:-5, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:'VIE' },
 		{ type:'DEF', code:'SBI', name:'Sbires', desc:'1', cible:'fam', classe:'CHN', vit:0, esq:0, tou:0, pui:5, vol:0, arm:0, vie:0, sou:0, mor:0, foc:0 , mnc:0 , sur:0 , letal:0, affect:null },
@@ -206,8 +206,15 @@ var data = [{
 /* Définit si la version a été appliquée */
 var isVersionAppliquee = function(version) {
 	check(version, String);
-	console.log('Mods.versions.isVersionAppliquee ' + version);
-	return (Versions.find({ name : version }).count() > 0);
+	
+	var retour = false;
+	retour = (Versions.find({ name : version }).count() > 0);
+	if(retour) {
+		console.log('Mods.versions.isVersionAppliquee ' + version + '...Oui');
+	} else {
+		console.log('Mods.versions.isVersionAppliquee ' + version + '...Non');		
+	}
+	return retour;
 }
 
 /* Ajoute une version au système */
@@ -325,8 +332,8 @@ var appliquerVersion = function(element) {
 		if(element.skills && element.skills.length > 0) {
 			_.each(element.skills, function(element, index, list) {
 				var classe = element.classe && Mods.classes.getByCode(element.classe);
-				console.log(classe);
-				var id = Mods.skills.add(null, element.type, element.code, element.name, element.desc, element.cible, classe, 
+				//console.log(classe);
+				var id = Mods.skills.add(null, element.type, element.code, element.name, element.desc, element.cible, classe && classe._id, 
 					element.vit, element.esq, element.tou, element.pui, element.vol, element.arm, element.vie, element.sou, element.mor, 
 					element.foc, element.mnc, element.sur, element.letal, element.affect, element.passive, element.noTest);
 	    	});

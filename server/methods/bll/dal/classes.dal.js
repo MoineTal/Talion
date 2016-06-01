@@ -38,7 +38,7 @@ var getClasse = function(idClasse) {
 
 var getByCode = function(codeClasse) {
 	check(codeClasse, String);
-	console.log("classes.getByCode.codeClasse="+codeClasse);
+	//console.log("classes.getByCode.codeClasse="+codeClasse);
 	return Classes.findOne({ code : codeClasse });
 }
 
